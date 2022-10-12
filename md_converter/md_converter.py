@@ -4,6 +4,8 @@
 
 import sys
 
+CODE_DELIMETER = '#---end---'
+
 def get_file(name):
     with open(name, 'r') as f:
         return f.read()
@@ -15,7 +17,7 @@ def write_file(name, merged):
 
 
 def converter(solution='solution.py', out='out.txt'):
-    info, code = get_file(solution).split('\n#---end---')
+    info, code = get_file(solution).split('\n' + CODE_DELIMETER)
     desc = []
     for line in info.split('\n'):
         if line.startswith('# title'):
