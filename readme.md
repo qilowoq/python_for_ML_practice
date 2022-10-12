@@ -249,7 +249,7 @@ def converter(solution='solution.py', out='out.txt'):
         else:
             desc.append(line[1:])
     merged = '+ [{}](#{})\n\n## {}\n\n'.format(title, lower_cased_title, title) + \
-        '\n'.join(desc) + '\n\n```python\n{}\n```'.format(code.lstrip('\n'))
+        '\n'.join(desc) + '\n\n```python\n{}\n```'.format(code.lstrip('\n').rstrip('\n'))
     write_file(out, merged)
 
 
