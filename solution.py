@@ -1,28 +1,35 @@
-# title Narkdown parser
-# description Yo
+# title Squared sorted
+# description Дан отсортированный список в неубавющем порядке. Вернуть элементы этого списка возведенные в квадрат в неубывающем порядке
+# Элементы списка это целые числа
+# O(n)
 #---end---
 
+def merge(a, b):
+    c = []
+    i = j = 0
+    while i < len(a) and j < len(b):
+        if a[i] < b[j]:
+            c.append(a[i])
+            i += 1
+        else:
+            c.append(b[j])
+            j += 1
+    if i < len(a):
+        c += a[i:]
+    if j < len(b):
+        c += b[j:]
+    return c
 
-def get_file(name):
-    with open(name, 'r') as f:
-        return f.read()
-
-def write_file(name):
-    merged = '+ [{}](#{})\n\n## {}\n\n'.format(title, lower_cased_title, title) + \
-    '\n'.join(desc) + '\n\n```python\n{}\n```'.format(code.lstrip('\n'))
-    with open('out.txt', 'w') as f:
-        f.write(merged)
-
-
-info, code = get_file('solution.py').split('\n#---end---')
-desc = []
-for line in info.split('\n'):
-    if line.startswith('# title'):
-        title = line[8:]
-        lower_cased_title = '-'.join(title.lower().split())
-    elif line.startswith('# description'):
-        desc.append(line[14:])
-    else:
-        desc.append(line[1:])
-
-write_file('out.txt')
+def squares(l):
+    ind = len(l) - 1
+    for i in range(len(l)):
+        if l[i] >= 0:
+            ind = i
+            break
+    a = []
+    b = []
+    for i in range(ind, len(l)):
+        a.append(l[i]**2)
+    for j in range(ind-1, -1, -1):
+        b.append(l[j]**2)
+    return merge(a, b)
