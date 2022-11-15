@@ -90,5 +90,4 @@ if __name__ == "__main__":
     data = get_file(inputfile)
     title, lower_cased_title = get_titles(data)
     desc, code = get_desc_code(data)
-    print(title, lower_cased_title)
     converter(solution=inputfile, out=outputfile)
