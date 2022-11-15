@@ -83,6 +83,9 @@ def get_args(argv):
     return inputfile, outputfile
 
 if __name__ == "__main__":
+    # python md_converter_but_better.py -i <solution.py> -o <readme.md>
+    # -i  input file name
+    # -o output file name
     inputfile, outputfile = get_args(sys.argv[1:])
     data = get_file(inputfile)
     title, lower_cased_title = get_titles(data)
