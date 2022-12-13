@@ -1,345 +1,419 @@
-## Python for ML
 
-+ [Squared sorted](#squared-sorted)
-+ [Compress string](#compress-string)
-+ [Consecutive subsequence](#consecutive-subsequence)
-+ [Sum of diagonal elements](#sum-of-diagonal-elements)
-+ [Longest subsequence](#longest-subsequence)
-+ [Merge two lists](#merge-two-lists)
-+ [Squared sorted](#squared-sorted)
-+ [MD Converter](#md-converter)
-+ [MD Converter modified](#md-converter-modified)
 
-<!--DIVIDER-->
+# python-course
 
-## Squared sorted
+## Задание 1
 
-Дан отсортированный список в неубавющем порядке. Вернуть элементы этого списка возведенные в квадрат в неубывающем порядке
-Элементы списка это целые числа
-O(n)
+### Описание
 
-```python
-def merge(a, b):
-    c = []
-    i = j = 0
-    while i < len(a) and j < len(b):
-        if a[i] < b[j]:
-            c.append(a[i])
-            i += 1
-        else:
-            c.append(b[j])
-            j += 1
-    if i < len(a):
-        c += a[i:]
-    if j < len(b):
-        c += b[j:]
-    return c
+Реализовать конвертер c форматированием. На входе файл *.py c содержимым в виде описания задачи и исходного кода задачи, на выходе файл *.md с оформленным форматированием под markdown формат. Если *.md файл не пуст, то осуществить дозапись в файл новой задачи без перезаписи содержимого.
+Программа должна быть покрыта тестами.
 
-def squares(l):
-    ind = len(l) - 1
-    for i in range(len(l)):
-        if l[i] >= 0:
-            ind = i
-            break
-    a = []
-    b = []
-    for i in range(ind, len(l)):
-        a.append(l[i]**2)
-    for j in range(ind-1, -1, -1):
-        b.append(l[j]**2)
-    return merge(a, b)
+### Пример 1
+<details><summary>Вход</summary><blockquote>
+    
+solution.py
+
+```
+# title Print Hello
+# description Напечатать на экран Hello!
+# ---end----
+
+def print_hello():
+    print('Hello!')
+    
+```    
+ 
+out.md
+````
+
+````
+</blockquote></details>
+
+
+<details><summary>Выход</summary><blockquote>
+
+out.md
+
+````
++ [Print Hello](#print-hello)
+
+## Print Hello
+
+Напечатать на экран Hello!
+
+```python 
+def print_hello():
+    print('Hello!')
 ```
 
-## Compress string
+````
+</blockquote></details>
 
-in:
-s = ["a","b","b","c","c","c","d"]
-out:
- ab2c3d
+### Пример 2
 
-```python
-def compress(s):
-    counter = 1
-    res = []
-    if len(s) == 1:
-        return s[0]
-    if len(s) == 0:
-        return ""
-    for i in range(1, len(s)):
-        if s[i] == s[i-1]:
-            counter += 1
-        else:
-            if counter > 1:
-                res.append(s[i-1] + str(counter))
-            else:
-                res.append(s[i-1])
-            counter = 1
-    if s[-1] == s[-2]:
-        res.append(s[-1] + str(counter))
-    else:
-        res.append(s[-1])
-    return "".join(res)
+<details><summary>Вход</summary><blockquote>
+
+solution.py
+
+```
+# title Print Greeting
+# description Напечатать на экран Greeting!
+# ---end----
+
+def print_greeting():
+    print('Greeting!')
+    
+```    
+ 
+out.md
+
+````
++ [Print Hello](#print-hello)
+
+## Print Hello
+
+Напечатать на экран Hello!
+
+```python 
+def print_hello():
+    print('Hello!')
+```
+````
+</blockquote></details>
+    
+<details><summary>Выход</summary><blockquote>
+
+out.md
+
+````
++ [Print Hello](#print-hello)
++ [Print Greeting](#print-greeting)
+
+## Print Hello
+
+Напечатать на экран Hello!
+
+```python 
+def print_hello():
+    print('Hello!')
 ```
 
-## Consecutive subsequence
+## Print Greeting
 
-Вход: nums = [0,1,2,4,5,7] # [0, 1, 2], [4, 5], [7]
-Выход: ["0->2","4->5","7"]
+Напечатать на экран Greeting!
 
-Вход: nums = [0,1,2,3,4,5,6,7,8] #
-Выход: ["0->8"]
-
-Вход: nums = [0]
-Выход: ["0"]
-
-Вход: nums = [0, 2, 4, 6, 8]
-Выход: ["0", "2", "4", "6", "8"]
-
-```python
-def prob(l):
-    seq = []
-    if len(l) == 0:
-        return seq
-    left = l[0]
-    right = l[0]
-    for i in range(1, len(l)):
-        if l[i] - 1 != l[i-1]:
-            if left == right:
-                seq.append(str(left))
-            else:
-                seq.append(str(left) + '->' + str(right))
-            left = right = l[i]
-        right = l[i]
-    if left == right:
-        seq.append([str(left)])
-    else:
-        seq.append(str(left) + '->' + str(right))
-    return seq
+```python 
+def print_greeting():
+    print('Greeting!')
 ```
+````
+</blockquote></details>
 
-## Sum of diagonal elements
+## Задание 2
 
-Найти сумму элементов на главной и побочной диагоналях
-in:
-mat = [[1,2,3],
-       [4,5,6],
-       [7,8,9]]
+### Описание
+
+Реализовать конвертер из csv файла в json объект. На вход программа принимает csv файл, результатом работы программы является файл *.json, содержимым которого является сконвертированные csv в json.
+Программа должна быть покрыта тестами, учесть крайние случаи, что файл может быть пустым, некоторых значений может и не быть в csv
+
+Необходимо реализовать 2 решения:
+1. Без использования сторонних модулей
+2. С использованием модулей import csv, import json 
+
+
+
+### Пример
+
+<details><summary>Вход</summary><blockquote>
+
+input.csv
+
+```
+id,name,birth,salary,department
+1,Ivan,1980,150000,1
+2,Alex,1960,200000,5
+3,Ivan,,130000,8
+```
+</blockquote></details>
+
+<details><summary>Выход</summary><blockquote>
+
+output.json
+
+```
+[
+ {
+   id: 1,
+   name: Ivan,
+   birth: 1980,
+   salary: 150000,
+   department: 1
+ },
+ {
+   id: 2,
+   name: Alex,
+   birth: 1960,
+   salary: 200000,
+   department: 5
+ },
+ {
+   id: 3,
+   name: Ivan,
+   birth: null,
+   salary: 130000,
+   department: 8
+ }
+]
+```
+</blockquote></details>
+
+## Задание 3
+
+### Описание
+
+string = "A simple sentence has the most basic elements that make it a sentence: a subject a verb and a completed thought"
+
+1. Найти все числа от 1 до 1000, которые делятся на 17
+
+2. Найти все числа от 1 до 1000, которые содержат в себе цифру 2
+
+3. Найти все числа от 1 до 10000, которые являются палиндромом	
+
+4. Посчитать количество пробелов в строке
+
+5. Есть любая последовательность непробельных символов латинского алфавита, удалить все гласные из этого слова
+
+6. На входе строка со словами, разделенными через 1 пробел. Найти все слова, длина которых не больше 5
+
+7. На входе строка со словами, разделенными через 1 пробел. Получить словарь, где в качестве ключа используется само слово, а в значении длина этого слова.
+
+8. На входе предложение со всеми пробельными и непробельными символами латинского алфавита. Получить словарь используемых букв в строке, то есть на выходе список уникальных букв.
+
+9. На входе список чисел, получить список квадратов этих чисел / use map
+
+10. На входе список координат, например, [(1, 1), (2, 3), (5, 3)]. Найти все точки, которые принадлежат прямой y = 5 * x - 2. 
+На выходе получить словарь из самой точки и расстоянии до этой точки из начала координат (0, 0)
+
+11. Возвести в квадрат все четные числа от 2 до 27. На выходе список.
+
+12. На входе список из координат точек на плоскости. Найти расстояние до самой удаленной точку от начала координат (0, 0) в первой четверти 
+
+13. На входе два списка чисел nums_first = [1, 2, 3, 5, 8] и nums_second = [2, 4, 8, 16, 32]. Получить пары сумм и разниц, [(3, -1), (6, -2), (11, -5), ...]
+
+14. На входе список строк из чисел, например, ['43141', '32441', '431', '4154', '43121']. Найти четные квадраты этих чисел. Ответ записать снова в список из строк, то есть сформировать обратно список строк, но уже отфильтровать все четные квадраты.
+
+15. Менеджер как обычно придумал свое представление данных, а нам оно не подходит
+
+input_str = """name,Petya,Vasya,Masha,Vova
+grade,5,5,8,3
+subject,math,language,physics,math
+year,1999,2000,1995,1998"""
+
+
+Мы хотим получить нормальную таблицу, чтобы импортировать в csv
+
+
+[
+  {
+    'name': 'Petya',
+    'grade': '5'
+    'subject': 'math'
+    'year': '1999'
+  },
+  {
+    'name': 'Vasya',
+    'grade': '5'
+    'subject': 'language'
+    'year': '2000'
+  },
+  ...
+]
+
+
+16. Получить сумму по столбцам у двумерного списка
+
+a = [[11.9, 12.2, 12.9],
+    [15.3, 15.1, 15.1], 
+    [16.3, 16.5, 16.5],
+    [17.7, 17.5, 18.1]]
+    
+result = [61.2, 61.3, 62.6]  
+
+
+
+
+## Задание 4
+
+### Описание
+
+Реализовать менеджер задач.
+Покрыть тестами TaskManager класс. Например, что подзадачи, ведет к тому, что и из соответствующей ComplexTask удаляется эта подзадача. 
+
+
+<details><summary>Исходный код</summary><blockquote>
+
+````
+class Task:
+    def __init__(self, id, name, description, ):
+        self.__id = id
+        self.__name = name
+        self.__description = description
+        
+    def get_id(self):
+        return self.__id
+        
+    def get_name(self):
+        return self.__name
+
+
+class Subtask(Task):
+    # have comlex task id
+    def __init__(self):
+        self.parent_id = 
+    
+
+class ComplexTask(Task):
+    # contains list of subtasks
+    def __init__(self):
+        self.subtasks = []  
+
   
-out: 
-25  
+class TaskManager:
+    
+    id_series = 0
+    
+    def __init__(self):
+        self.tasks = {}
+        self.subtasks = {}
+    
+    
+    def __get_and_increment_id(self):
+        next_id_value = TaskManager.id_series
+        TaskManager.id_series += 1 
+        return next_id_value
+        
+    
+    def create_task(self, name, description):
+        current_id = self.__get_and_increment_id()
+        new_task = Task(current_id, name, description)
+        self.tasks[current_id] = new_task
+        return new_task
+    
+    
+    def create_subtask(self, subtask):
+        pass
+    
+    def create_complex_task(self, complex_task):
+        pass
+    
+    def get_tasks(self):
+        pass
+    
+    def get_subtasks(self):
+        pass
+    
+    def get_complex_tasks(self):
+        pass
+    
+    def get_tasks_by_id(self, id):
+        pass
+    
+    def get_subtasks_by_id(self, id):
+        pass
+    
+    def get_complex_tasks_by_id(self, id):
+        pass
+    
+    def remove_tasks(self):
+        pass
+    
+    def remove_subtasks(self):
+        pass
+    
+    def remove_complex_tasks(self):
+        pass
+    
+    def remove_task_by_id(self, id):
+        pass
+    
+    def remove_subtask_by_id(self, id):
+        pass
+    
+    def remove_complex_task_by_id(self, id):
+        pass
+    
+    def update_status(self, task):
+        pass
+````
 
-```python
-def diagonalSum(mat):
-    sum = 0
-    n = len(mat)
-    for i in range(n):
-        if i != n - 1 - i:
-            sum += mat[i][i] + mat[i][n-1-i]
-        else:
-            sum += mat[i][i] 
-    return sum
+</blockquote></details>
+
+
+## Задание 5
+
+### Описание
+
+Создать сервис для расчета своей почасовой ставки.
+
+Большинство наемных сотрудников имеют фиксированную оплачиваемую ставку. Как-то раз стало интересно, сколько случайно выбранный сотрудник получает в час.
+Почасовая ставка отличается из-за праздников и разных выходных от года к году.
+
+1. Сервис должен возвращать ответ в формате JSON вида:
 ```
-
-## Longest subsequence
-
-list, состоящий из 0 и 1. Найти длину максимальной непрерывной подпоследовательности, состоящей из 1
-Вход: [1,1,0,1,1,1] 
-Выход: 3    
-
-```python
-   
-
-def prob(l):
-    max_val = 0
-    cur_val = 0
-    for item in l:
-        if item == 1:
-            cur_val += 1
-        else:
-            max_val = max(cur_val, max_val)
-            cur_val = 0
-    return max(cur_val, max_val)
+{
+  "year": 2016,
+  "month": "JULY",
+  "salary": 1000000,
+  "hour_income": 49950.87
+}
 ```
+2. Округление почасовой ставки должно быть до копеек
+3. Покрыть тестами код
 
-## Merge two lists
 
-на входе два отсортированных массива (списка), на выходе получить 1 отсортированный массив
-Элементы списка это целые числа
-O(n)
 
-```python
-def merge(a, b):
-    c = []
-    i = j = 0
-    while i < len(a) and j < len(b):
-        if a[i] < b[j]:
-            c.append(a[i])
-            i += 1
-        else:
-            c.append(b[j])
-            j += 1
-    if i < len(a):
-        c += a[i:]
-    if j < len(b):
-        c += b[j:]
-    return c
+<details><summary>Вход</summary><blockquote>
+input.json
 ```
-
-## Squared sorted
-
-Дан отсортированный список в неубавющем порядке. Вернуть элементы этого списка возведенные в квадрат в неубывающем порядке
- Элементы списка это целые числа
- O(n)
-
-```python
-def merge(a, b):
-    c = []
-    i = j = 0
-    while i < len(a) and j < len(b):
-        if a[i] < b[j]:
-            c.append(a[i])
-            i += 1
-        else:
-            c.append(b[j])
-            j += 1
-    if i < len(a):
-        c += a[i:]
-    if j < len(b):
-        c += b[j:]
-    return c
-
-def squares(l):
-    ind = len(l) - 1
-    for i in range(len(l)):
-        if l[i] >= 0:
-            ind = i
-            break
-    a = []
-    b = []
-    for i in range(ind, len(l)):
-        a.append(l[i]**2)
-    for j in range(ind-1, -1, -1):
-        b.append(l[j]**2)
-    return merge(a, b)
+{
+  "year": 2016,
+  "month": "JULY",
+  "salary": 1000000
+}
 ```
+</blockquote></details>
 
-## MD Converter
-
-Конвертирует solution.py -> out.txt
-
-```python
-import sys
-
-CODE_DELIMETER = '#---end---'
-
-def get_file(name):
-    with open(name, 'r') as f:
-        return f.read()
-
-
-def write_file(name, merged):
-    with open(name, 'w') as f:
-        f.write(merged)
-
-
-def converter(solution='solution.py', out='out.txt'):
-    info, code = get_file(solution).split('\n' + CODE_DELIMETER)
-    desc = []
-    for line in info.split('\n'):
-        if line.startswith('# title'):
-            title = line[8:]
-            lower_cased_title = '-'.join(title.lower().split())
-        elif line.startswith('# description'):
-            desc.append(line[14:])
-        else:
-            desc.append(line[1:])
-    merged = '+ [{}](#{})\n\n## {}\n\n'.format(title, lower_cased_title, title) + \
-        '\n'.join(desc) + '\n\n```python\n{}\n```'.format(code.lstrip('\n').rstrip('\n'))
-    write_file(out, merged)
-
-
-if __name__ == "__main__":
-    if len(sys.argv) > 3:
-        sys.exit('Need at maximum 2 arguments name of solution file and name of out file')
-    elif len(sys.argv) == 3:
-        _, solution, out = sys.argv
-        converter(solution, out)
-    elif len(sys.argv) == 2:
-        solution = sys.argv[1]
-        converter(solution)
-    else:
-        converter()
+<details><summary>Выход</summary><blockquote>
+output.json
 ```
+{
+  "year": 2016,
+  "month": "JULY",
+  "salary": 1000000,
+  "hour_income": 49950.87
+}
+```
+</blockquote></details>
 
-## MD Converter modified
 
-Добавляет solution.py -> readme.md
+## Задание 6
+
+### Описание
+
+Реализовать класс для комплексных чисел ComplexNumber. Основные операции: сложение, вычитание, умножение, модуль числа. Покрыть тестами.
+ 
+### Пример
 
 ```python
-import sys, getopt
+first = ComplexNumber(1, 2)
+second = ComplexNumber(2, 3)
+third = first + second
+print(third) # 3 + 5i
 
-CODE_DELIMETER = '#---end---'
-MD_DELIMETER = '<!--DIVIDER-->'
-
-def get_file(name):
-    with open(name, 'r') as f:
-        return f.read()
-
-
-def write_file(name, link, content):
-    try:
-        readme = get_file(name)
-        with open(name, 'w') as f:
-            links, contents = readme.split(MD_DELIMETER)
-            links = "{}\n{}".format(links.strip('\n'), link)
-            contents = "{}\n\n{}".format(contents.strip('\n'), content)
-            merged = "{}\n\n{}\n\n{}".format(links, MD_DELIMETER, contents)
-            f.write(merged)
-    except FileNotFoundError:
-        with open(name, 'w') as f:
-            merged = "{}\n\n{}\n\n{}".format(link, MD_DELIMETER, content)
-            f.write(merged)
-
-
-def get_content(title, lower_cased_title, desc, code):
-    link = "+ [{}](#{})".format(title, lower_cased_title)
-    content = "## {}\n\n{}\n\n```python\n{}\n``` ".format(title, desc, code)
-    return link, content
-
-
-def converter(solution='solution.py', out='readme.md'):
-    info, code = get_file(solution).split(CODE_DELIMETER)
-    desc = []
-    for line in info.split('\n'):
-        if line.startswith('# title'):
-            title = line[8:]
-            lower_cased_title = '-'.join(title.lower().split())
-        elif line.startswith('# description'):
-            desc.append(line[14:])
-        else:
-            desc.append(line[1:])
-    link, content = get_content(title, lower_cased_title, '\n'.join(desc).strip('\n'), code.strip('\n'))
-    write_file(out, link, content)
-
-def get_args(argv):
-    inputfile = 'solution.py'
-    outputfile = 'readme.md'
-    try:
-        opts, _ = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
-    except getopt.GetoptError:
-        print('-i <inputfile> -o <outputfile>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print('-i <inputfile> -o <outputfile>')
-            sys.exit()
-        elif opt in ("-i", "--ifile"):
-            inputfile = arg
-        elif opt in ("-o", "--ofile"):
-            outputfile = arg
-    return inputfile, outputfile
-
-if __name__ == "__main__":
-    inputfile, outputfile = get_args(sys.argv[1:])
-    converter(solution=inputfile, out=outputfile)
+d = {}
+d[first] = 0
+d[second] = 1
+d[third] = d[first] + d[second]
+print(d[third]) # 1
 ```

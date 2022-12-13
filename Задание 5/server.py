@@ -16,10 +16,10 @@ class HourIncome(BaseHTTPRequestHandler):
         self.end_headers()
 
         sdo = IsDayOff()
-        wd = sdo.number_of_work_days_in_month(data['year'], data['month'])
-        income = round(data['salary'] / (wd * 8), 2)
+        wd = sdo.number_of_work_days_in_month(data["year"], data["month"])
+        income = round(data["salary"] / (wd * 8), 2)
         data.update({"hour_income": income})
-        self.wfile.write(bytes(str(data), "utf-8"))
+        self.wfile.write(json.dumps(data).encode(encoding='utf_8'))
 
 
 
