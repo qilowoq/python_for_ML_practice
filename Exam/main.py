@@ -19,17 +19,13 @@ class StrategyDeal:
 
     def __str__(self):
         # текстовое представление сделки
-        s1 = """BANK: {}
-START_PRICE: {}
-STOP_PRICE: {}
-
-""".format(self._bank, self._entry, self._close)
-        s2 = ''
+        s1 = 'BANK: {}\nSTART_PRICE: {}\nSTOP_PRICE: {}\n'.format(self._bank, self._entry, self._close)
+        l2 = []
         pers = self.get_target_percents()
         bnks = self.get_target_banks()
         for i, tar in enumerate(self._targets):
-            s2 += '{} target: {}\nPercent: {}%\nBank: {} \n\n'.format(i+1, tar, pers[i], bnks[i])
-        return s1 + '\n' + s2
+            l2.append('{} target: {}\nPercent: {}%\nBank: {} \n\n'.format(i+1, tar, pers[i], bnks[i]))
+        return s1 + '\n' + ''.join(l2)
 
 
 def read_data(name):
